@@ -3,16 +3,20 @@ const el = {
     arena: document.getElementById('arena-batalha'),
     balaoAlex: document.getElementById('balao-alex'),
     balaoBoss: document.getElementById('balao-boss'),
-    imagemAlex: document.getElementById('imagem-alex'),
-    imagemBoss: document.getElementById('imagem-boss'),
+    imagemAlex: document.getElementById('imagem-alex'), // Imagem dentro do balão
+    imagemBoss: document.getElementById('imagem-boss'), // Imagem dentro do balão
     bossMao: document.getElementById('boss-mao'),
     mensagem: document.getElementById('mensagem'),
     marcadores: document.getElementById('marcadores'),
+
+    // Corrigidas as referências para os bonecos no chão
+    alexSpriteChao: document.getElementById('alex-imagem'),
     bossImg: document.getElementById('boss-imagem'),
+
     musica: document.getElementById('musica-fundo'),
     sfxJanken: document.getElementById('sfx-janken'),
-    sfxVitoria: document.getElementById('sfx-vitoria'),
-    sfxDerrota: document.getElementById('sfx-derrota'),
+    sfxDerrotaBoss: document.getElementById('sfx-derrota-boss'),
+    sfxDerrotaPlayer: document.getElementById('sfx-derrota-player'),
     btnOpcoes: document.querySelectorAll('.botao-imagem')
 };
 
@@ -29,7 +33,7 @@ const acoesImagens = {
         tesoura: 'imgs/alex%20kid/acao_tesoura.png'
     }
 };
-// Imagens de Ataque para cada personagem
+
 const alexAtaqueImagens = {
     pedra: 'imgs/alex%20kid/AlexKidd_pedra.png',
     papel: 'imgs/alex%20kid/AlexKidd_papel.png',
@@ -42,75 +46,69 @@ const bossAtaqueImagens = {
     tesoura: 'imgs/Gooseka/gooseka_tesoura.png'
 };
 
+const morteImagens = {
+    alex: 'imgs/Gooseka/lost_animation.gif',
+    boss: 'imgs/Gooseka/lost_animation.gif'
+};
+
 const opcoes = ['pedra', 'papel', 'tesoura'];
 let vitorias = 0;
 let derrotas = 0;
-let musicaTocando = false;
+let primeiraInteracao = false; // Substitui o musicaTocando para controlar o primeiro play
 
-// Evento de clique em cada balão de escolha
+// Evento de clique em cada botão de escolha
 el.btnOpcoes.forEach(botao => {
     botao.addEventListener('click', (e) => {
-        if (!musicaTocando) {
-            el.musica.play();
-            musicaTocando = true;
-        }
+        // Pausa a música de fundo imediatamente quando o jogador clica numa opção
+        el.musica.pause();
+        primeiraInteracao = true;
 
-        //pega o id do botão clicado (pedra, papel ou tesoura) e inicia a animação da rodada
         const escolhaAlex = botao.id || botao.parentElement.id;
-        iniciarAnimacaoRodada(e.currentTarget.id);
+        iniciarAnimacaoRodada(escolhaAlex);
     });
 });
 
 function iniciarAnimacaoRodada(escolhaAlex) {
-    //  Esconde os  botões e mostra texto
     el.botoes.style.display = 'none';
     el.arena.style.display = 'flex';
     el.mensagem.innerText = "JAN... KEN...";
 
-    //toca o som do janken
+    // Toca o som do janken
     el.sfxJanken.currentTime = 0;
     el.sfxJanken.play();
 
-    // Inicia o efeito das açoes girando
     let contador = 0;
-    const tempoTroca = 100; // Troca a cada 0.1 segundo
+    const tempoTroca = 100;
 
     const animacao = setInterval(() => {
-        // Mostra opções aleatórias piscando
-        mostrarEscolha(el.imagemAlex, imagens.alex, opcoes[contador % 3]);
-        mostrarEscolha(el.imagemBoss, imagens.boss, opcoes[(contador + 1) % 3]);
+        mostrarEscolha(el.imagemAlex, acoesImagens.alex, opcoes[contador % 3]);
+        mostrarEscolha(el.imagemBoss, acoesImagens.boss, opcoes[(contador + 1) % 3]);
         contador++;
     }, tempoTroca);
 
-    // 3. Após 2 segundos, para a animação e mostra o resultado!
-    setTimeout(() => {
+    // Quando o áudio do Janken chegar ao fim, ele aciona a jogada
+    el.sfxJanken.onended = () => {
         clearInterval(animacao);
         finalizarRodada(escolhaAlex);
-    }, 2000);
+    };
 }
 
 function finalizarRodada(escolhaAlex) {
-    // Computador escolhe
     const escolhaBoss = opcoes[Math.floor(Math.random() * 3)];
 
-    // Mostra as escolhas finais na tela
-    mostrarEscolha(el.imagemAlex, imagens.alex, escolhaAlex);
-    mostrarEscolha(el.imagemBoss, imagens.boss, escolhaBoss);
+    mostrarEscolha(el.imagemAlex, acoesImagens.alex, escolhaAlex);
+    mostrarEscolha(el.imagemBoss, acoesImagens.boss, escolhaBoss);
     el.mensagem.innerText = "PON!";
 
-    //muda o spirte do alex para a jogada final
-    el.imagemAlex.src = alexAtaqueImagens[escolhaAlex];
-    el.imagemAlex.alt = `Escolha: ${escolhaAlex}`;
-
-    //muda o sprite do boss para a jogada final
-    el.bossSprite.src = 'imgs/Gooseka/gooseka_atacando.png';
-    el.bossMao.src = bossMaoImagens[escolhaBoss] || 'imgs/Gooseka/gooseka_mao.png';
+    // Mostra as animações de ataque no chão
+    el.alexSpriteChao.src = alexAtaqueImagens[escolhaAlex];
+    el.bossImg.src = 'imgs/Gooseka/gooseka_atacando.png';
+    el.bossMao.src = bossAtaqueImagens[escolhaBoss] || 'imgs/Gooseka/gooseka_mao.png';
     el.bossMao.style.display = 'block';
 
-    // Verifica quem ganhou
     setTimeout(() => {
         verificarVencedor(escolhaAlex, escolhaBoss);
-    }, 1000); // Espera 1 segundinho pra pessoa processar o resultado
+    }, 1000);
 }
 
 function mostrarEscolha(elemento, imagensPersonagem, escolha) {
@@ -120,7 +118,7 @@ function mostrarEscolha(elemento, imagensPersonagem, escolha) {
 
 function verificarVencedor(alex, boss) {
     if (alex === boss) {
-        el.mensagem.innerText = "EMPATE! DE NOVO!";
+        el.mensagem.innerText = "EMPATE!";
     } else if (
         (alex === 'pedra' && boss === 'tesoura') ||
         (alex === 'papel' && boss === 'pedra') ||
@@ -128,33 +126,73 @@ function verificarVencedor(alex, boss) {
     ) {
         el.mensagem.innerText = "GANHOU!";
         vitorias++;
-        el.marcadores.innerHTML += " O "; // Adiciona o 'O' de vitória[cite: 2]
+        el.marcadores.innerHTML += " O ";
+
+        tocarSom(el.sfxDerrotaBoss);
     } else {
-        el.mensagem.innerText = "PERDEU!";
+        el.mensagem.innerText = "VOCE PERDEU!";
         derrotas++;
-        el.marcadores.innerHTML += " X "; // Adiciona o 'X'
+        el.marcadores.innerHTML += " X ";
+
+        tocarSom(el.sfxDerrotaPlayer);
     }
 
-    // Verifica o "Melhor de 3"
     setTimeout(() => {
         if (vitorias === 2) {
-            alert("VOCÊ VENCEU O GOOSEKA! PRÓXIMA FASE!");
-            resetarBoss();
+            acionarMorteEFinalizar('boss');
         } else if (derrotas === 2) {
-            alert("GAME OVER! VOCÊ VIROU PEDRA!");
-            resetarBoss();
+            acionarMorteEFinalizar('alex');
         } else {
-            // Volta para a tela de escolher os balões para a próxima rodada
-            el.botoes.style.display = 'flex';
-            el.arena.style.display = 'none';
+            prepararProximaRodada();
         }
     }, 2000);
+}
+
+function acionarMorteEFinalizar(perdedor) {
+    el.arena.style.display = 'none';
+
+    if (perdedor === 'boss') {
+        el.bossImg.src = morteImagens.boss;
+        el.bossMao.style.display = 'none';
+
+    } else if (perdedor === 'alex') {
+        el.alexSpriteChao.src = morteImagens.alex;
+    }
+
+    setTimeout(() => {
+        if (perdedor === 'boss') {
+            alert("VOCÊ VENCEU!");
+        } else {
+            alert("GAME OVER!");
+        }
+        resetarBoss();
+    }, 3000);
+}
+
+function tocarSom(audio) {
+    audio.currentTime = 0;
+    audio.play();
+}
+
+function prepararProximaRodada() {
+    // Repõe os bonecos parados no chão corretamente
+    el.alexSpriteChao.src = 'imgs/alex%20kid/AlexKidd_ataque.gif'; // Se tiver um alex_idle.gif, use-o aqui
+    el.bossImg.src = 'imgs/Gooseka/gooseka_idle.gif';
+    el.bossMao.style.display = 'none';
+
+    el.botoes.style.display = 'flex';
+    el.arena.style.display = 'none';
+
+    // A música volta a tocar suavemente quando os botões reaparecem
+    if (primeiraInteracao) {
+        el.musica.volume = 0.4; // Baixa o volume um pouco se quiser
+        el.musica.play();
+    }
 }
 
 function resetarBoss() {
     vitorias = 0;
     derrotas = 0;
     el.marcadores.innerHTML = "";
-    el.botoes.style.display = 'flex';
-    el.arena.style.display = 'none';
+    prepararProximaRodada();
 }
