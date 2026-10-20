@@ -7,11 +7,23 @@
 }
 
 body {
-    background-color: #000;
+    /* Cor de fundo caso a imagem não carregue */
+    background-color: #111;
+
+    /* Coloque o caminho da sua imagem aqui */
+    background-image: url('imgs/fundo.jpg');
+
+    /* Faz a imagem cobrir a tela toda sem achatar */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    /* Centraliza a sua .tv-screen perfeitamente no meio da tela */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
 }
 
 /* A "Televisão" / Borda do Jogo */
@@ -24,12 +36,17 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     image-rendering: pixelated;
-    /* Azul clássico da tela do Janken */
-    border-left: 30px solid #238cf5;
-    /* Simulando a borda de tijolos */
-    border-bottom: 30px solid #238cf5;
     position: relative;
     overflow: hidden;
+    /* Borda escura imitando a carcaça de plástico da TV */
+    border: 15px solid #222;
+
+    /* Cantos levemente arredondados de TV de tubo */
+    border-radius: 20px;
+
+    /* Brilho azulado saindo da tela para o cenário de fundo */
+    box-shadow: 0 0 80px rgba(0, 100, 255, 0.4),
+        inset 0 0 20px rgba(0, 0, 0, 0.8);
 }
 
 /* Placar do Alex (Canto Superior Esquerdo) */
