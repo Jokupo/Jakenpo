@@ -35,9 +35,9 @@ const acoesImagens = {
 };
 
 const alexAtaqueImagens = {
-    pedra: 'imgs/alex kid/alexKidd_pedra.png',
-    papel: 'imgs/alex kid/alexKidd_papel.png',
-    tesoura: 'imgs/alex kid/alexKidd_tesoura.png'
+    pedra: 'imgs/alex%20kid/alexKidd_pedra.png',
+    papel: 'imgs/alex%20kid/alexKidd_papel.png',
+    tesoura: 'imgs/alex%20kid/alexKidd_tesoura.png'
 };
 
 const bossAtaqueImagens = {
