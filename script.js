@@ -3,8 +3,8 @@ const el = {
     arena: document.getElementById('arena-batalha'),
     balaoAlex: document.getElementById('balao-alex'),
     balaoBoss: document.getElementById('balao-boss'),
-    imagemAlex: document.getElementById('imagem-alex'), // Imagem dentro do balão
-    imagemBoss: document.getElementById('imagem-boss'), // Imagem dentro do balão
+    imagemAlex: document.getElementById('imagem-alex'),
+    imagemBoss: document.getElementById('imagem-boss'),
     bossMao: document.getElementById('boss-mao'),
     mensagem: document.getElementById('mensagem'),
     marcadores: document.getElementById('marcadores'),
@@ -54,12 +54,12 @@ const morteImagens = {
 const opcoes = ['pedra', 'papel', 'tesoura'];
 let vitorias = 0;
 let derrotas = 0;
-let primeiraInteracao = false; // Substitui o musicaTocando para controlar o primeiro play
+let primeiraInteracao = false;
 
-// Evento de clique em cada botão de escolha
+
 el.btnOpcoes.forEach(botao => {
     botao.addEventListener('click', (e) => {
-        // Pausa a música de fundo imediatamente quando o jogador clica numa opção
+        // Pausa a música de fundo imediatamente quando o jogador clica em alguma opção
         el.musica.pause();
         primeiraInteracao = true;
 
@@ -86,7 +86,7 @@ function iniciarAnimacaoRodada(escolhaAlex) {
         contador++;
     }, tempoTroca);
 
-    // Quando o áudio do Janken chegar ao fim, ele aciona a jogada
+    // Quando o áudio do Janken chegar ao fim, ele aciona mostra a jogada
     el.sfxJanken.onended = () => {
         clearInterval(animacao);
         finalizarRodada(escolhaAlex);
@@ -100,7 +100,7 @@ function finalizarRodada(escolhaAlex) {
     mostrarEscolha(el.imagemBoss, acoesImagens.boss, escolhaBoss);
     el.mensagem.innerText = "PON!";
 
-    // Mostra as animações de ataque no chão
+    // Mostra as animações de ataque no 
     el.alexSpriteChao.src = alexAtaqueImagens[escolhaAlex];
     el.bossImg.src = 'imgs/Gooseka/gooseka_atacando.png';
     el.bossMao.src = bossAtaqueImagens[escolhaBoss] || 'imgs/Gooseka/gooseka_mao.png';
@@ -183,9 +183,9 @@ function prepararProximaRodada() {
     el.botoes.style.display = 'flex';
     el.arena.style.display = 'none';
 
-    // A música volta a tocar suavemente quando os botões reaparecem
+    // A música volta a tocar  quando os botões reaparecem
     if (primeiraInteracao) {
-        el.musica.volume = 0.4; // Baixa o volume um pouco se quiser
+        el.musica.volume = 0.2;
         el.musica.play();
     }
 }

@@ -10,7 +10,7 @@ body {
     /* Cor de fundo caso a imagem não carregue */
     background-color: #111;
 
-    /* Coloque o caminho da sua imagem aqui */
+
     background-image: url('imgs/fundo.jpg');
 
     /* Faz a imagem cobrir a tela toda sem achatar */
@@ -18,7 +18,6 @@ body {
     background-position: center;
     background-attachment: fixed;
 
-    /* Centraliza a sua .tv-screen perfeitamente no meio da tela */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,7 +25,7 @@ body {
     margin: 0;
 }
 
-/* A "Televisão" / Borda do Jogo */
+/* tela do jogo*/
 .tv-screen {
     width: 600px;
     height: 450px;
@@ -70,7 +69,7 @@ body {
     letter-spacing: 10px;
 }
 
-/* Balões de Nuvem (Usando CSS para simular a nuvem) */
+
 .bubble {
     background-color: white;
     border-radius: 50%;
