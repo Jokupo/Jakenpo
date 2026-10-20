@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+    /* Fonte estilo 8-bits */
+}
+
+body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* A "Televisão" / Borda do Jogo */
+.tv-screen {
+    width: 600px;
+    height: 450px;
+    background-color: #4a4a9c;
+    background-image: url("imgs/Master System - Alex Kidd in Miracle World - Backgrounds - King High Stone's Throne Room.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    /* Azul clássico da tela do Janken */
+    border-left: 30px solid #238cf5;
+    /* Simulando a borda de tijolos */
+    border-bottom: 30px solid #238cf5;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Placar do Alex (Canto Superior Esquerdo) */
+.placar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+}
+
+.placar h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 #000;
+}
+
+#marcadores {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    letter-spacing: 10px;
+}
+
+/* Balões de Nuvem (Usando CSS para simular a nuvem) */
+.bubble {
+    background-color: white;
+    border-radius: 50%;
+    padding: 20px;
+    font-size: 40px;
+    /* Se for usar imagem (pedra.png), mude aqui depois */
+    box-shadow: 0 0 0 5px white, 0 0 0 8px #000;
+    /* Borda preta por fora */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Posição das escolha */
+.action-bubbles {
+    position: absolute;
+    bottom: 150px;
+    left: 0px;
+    display: flex;
+    gap: 15px;
+}
+
+.botao-imagem {
+    width: 70px;
+    height: 70px;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.botao-imagem img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.botao-imagem:hover {
+    transform: scale(1.1);
+}
+
+/* Posição da Arena (Quando os balões piscam) */
+.battle-arena {
+    position: absolute;
+    top: 150px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.battle-bubble {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.battle-bubble img {
+    display: block;
+    width: auto;
+    height: 100px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.mensagem-centro {
+    color: white;
+    font-size: 18px;
+    text-shadow: 2px 2px 0 #000;
+    font-weight: bold;
+}
+
+/* Chão e Personagens */
+.characters-floor {
+    position: absolute;
+    bottom: 21px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px;
+}
+
+.boss-container {
+    position: relative;
+    display: inline-block;
+}
+
+.sprite-boss-mao {
+    position: absolute;
+    top: 30px;
+    left: -40px;
+    height: 50px;
+    image-rendering: pixelated;
+}
+
+.sprite-alex {
+    height: 100px;
+    image-rendering: pixelated;
+}
+
+.sprite-boss {
+    height: 100px;
+    image-rendering: pixelated;
+}

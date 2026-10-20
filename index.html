@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Kidd: Jankenpon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="tv-screen">
+        <div class="game-board">
+
+            <!-- Placar do Jogador -->
+            <div class="placar">
+                <h2>ALEX Kidd</h2>
+                <div id="marcadores">
+
+                </div>
+            </div>
+
+            <!-- Área dos Balões de Ação do Jogador -->
+            <div class="action-bubbles" id="botoes-escolha">
+                <button class="botao-imagem" id="pedra"><img src="imgs/alex kid/acao_pedra.png" alt="Pedra"></button>
+                <button class="botao-imagem" id="papel"><img src="imgs/alex kid/acao_papel.png" alt="Papel"></button>
+                <button class="botao-imagem" id="tesoura"><img src="imgs/alex kid/acao_tesoura.png"
+                        alt="Tesoura"></button>
+            </div>
+
+            <!-- Balões de Batalha  -->
+            <div class="battle-arena" id="arena-batalha" style="display: none;">
+                <div class="battle-bubble" id="balao-alex">
+                    <img id="imagem-alex" alt="Escolha de Alex">
+                </div>
+                <div class="mensagem-centro" id="mensagem">JAN... KEN...</div>
+                <div class="battle-bubble" id="balao-boss">
+                    <img id="imagem-boss" alt="Escolha de Gooseka">
+                </div>
+            </div>
+
+
+            <div class="characters-floor">
+                <img id="alex-imagem" src="imgs/alex%20kid/AlexKidd_ataque.gif" alt="Alex Kidd" class="sprite-alex">
+                <div class="boss-container">
+                    <img id="boss-imagem" src="imgs/Gooseka/gooseka_idle.gif" alt="Chefe" class="sprite-boss">
+
+                    <!-- A mão ganha style="display: none;" para ficar escondida -->
+                    <img id="boss-mao" src="imgs/Gooseka/gooseka_mao.png" alt="Mão do Chefe" class="sprite-boss-mao"
+                        style="display: none;">
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Áudios do Jogo -->
+        <audio id="musica-fundo" src="sounds/tema.mp3" loop></audio>
+        <audio id="sfx-janken" src="sounds/jokenpo.wav"></audio>
+        <audio id="sfx-vitoria" src="sounds/vitoria.wav"></audio>
+        <audio id="sfx-derrota" src="sounds/derrota.wav"></audio>
+
+        <script src="script.js"></script>
+</body>
+
+</html>
