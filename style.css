@@ -179,3 +179,11 @@ body {
     height: 100px;
     image-rendering: pixelated;
 }
+
+@media (max-width: 650px) {
+    .tv-screen {
+        width: 95vw;
+        height: auto;
+        border-width: 10px;
+    }
+}
